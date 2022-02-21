@@ -1,7 +1,17 @@
+const db = require('../../database/db-config.js')
+
+module.exports = {
+  add,
+  find,
+  findBy,
+  findById,
+}
+
 /**
   resolves to an ARRAY with all users, each user having { user_id, username }
  */
 function find() {
+  return db('users').select('id', 'username')
 
 }
 
@@ -9,6 +19,7 @@ function find() {
   resolves to an ARRAY with all users that match the filter condition
  */
 function findBy(filter) {
+  return db('users').where(filter)
 
 }
 
@@ -16,13 +27,16 @@ function findBy(filter) {
   resolves to the user { user_id, username } with the given user_id
  */
 function findById(user_id) {
-
+  return db('users')
+  .where({ id })
+  .first()
 }
 
 /**
   resolves to the newly inserted user { user_id, username }
  */
 function add(user) {
+  const [id] = await db('users').insert(user)
 
 }
 
